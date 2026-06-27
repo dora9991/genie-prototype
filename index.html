@@ -78,7 +78,12 @@
   footer a{display:block;color:#cfc9bd;font-size:14px;padding:4px 0}
   footer a:hover{color:#fff}
   .social{display:flex;gap:10px;margin-top:14px}
-  .social span{width:36px;height:36px;border-radius:50%;background:#3a372f;display:grid;place-items:center;font-size:13px;color:#fff}
+  .social a{width:40px;height:40px;border-radius:50%;background:#3a372f;color:#cfc9bd;display:grid;place-items:center;transition:transform .15s,background .15s,color .15s}
+  .social a svg{width:20px;height:20px;display:block}
+  .social a:hover{transform:translateY(-3px)}
+  .social a.line:hover{background:#06C755;color:#fff}
+  .social a.yt:hover{background:#FF0000;color:#fff}
+  .social a.ig:hover{background:#E1306C;color:#fff}
   .copy{text-align:center;border-top:1px solid #3a372f;margin-top:34px;padding-top:18px;font-size:12px;color:#8d887d}
 
   @media(max-width:820px){
@@ -100,7 +105,7 @@
       <a href="#">メンバー紹介</a>
       <a href="#">講師陣</a>
     </nav>
-    <a class="btn" href="#">公式LINE登録</a>
+    <a class="btn" href="https://lin.ee/SjBHjVV" target="_blank" rel="noopener">公式LINE登録</a>
     <a class="btn ghost menu-btn" href="#">≡</a>
   </div>
 </header>
@@ -110,7 +115,7 @@
     <h1>学校でも家庭でもない、<br><span class="em">“本音”</span>を語れる第３の居場所。</h1>
     <p class="lead">教員コミュニティ『ジーニー』は、先生方が安心して学び合い、つながれるオンラインの居場所です。一人で抱え込まない教員人生を、ここから。</p>
     <div class="cta">
-      <a class="btn" href="#">公式LINEに登録する</a>
+      <a class="btn" href="https://lin.ee/SjBHjVV" target="_blank" rel="noopener">公式LINEに登録する</a>
       <a class="btn ghost" href="#articles">記事を読む</a>
     </div>
   </div>
@@ -164,7 +169,7 @@
     <div class="band">
       <h2>教員コミュニティ『ジーニー』でできること</h2>
       <p>公式LINE登録で「AI時短テンプレート」と「教員ウェルビーイング診断」を無料プレゼント。全国の先生とつながり、学び合える環境がここにあります。</p>
-      <a class="btn" href="#">公式LINEに登録する</a>
+      <a class="btn" href="https://lin.ee/SjBHjVV" target="_blank" rel="noopener">公式LINEに登録する</a>
     </div>
   </div>
 </section>
@@ -175,10 +180,14 @@
       <div>
         <h4>教員コミュニティ ジーニー</h4>
         <p style="font-size:14px;max-width:380px">学校でも家庭でもない“本音”を語れる第３の居場所。「一人で抱え込まない教員人生」を応援する、対話型の学びのコミュニティです。</p>
-        <div class="social"><span>L</span><span>Y</span><span>I</span></div>
+        <div class="social">
+          <a class="line" href="https://lin.ee/SjBHjVV" target="_blank" rel="noopener" aria-label="公式LINE"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.9 3 2.75 6.46 2.75 10.73c0 3.82 3.3 7.02 7.76 7.63.3.06.71.2.82.46.09.24.06.6.03.85l-.13.8c-.04.24-.19.94.82.51 1.01-.42 5.46-3.22 7.45-5.51 1.37-1.5 2-3.03 2-4.73C21.5 6.46 17.34 3 12 3z"/></svg></a>
+          <a class="yt" href="https://www.youtube.com/@%E3%82%B8%E3%83%BC%E3%83%8B%E3%83%BC-m3h" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.6 7.2s-.19-1.36-.79-1.96c-.76-.79-1.6-.8-1.99-.84C16.05 4.2 12 4.2 12 4.2h-.01s-4.04 0-6.81.2c-.39.05-1.23.06-1.99.85-.6.6-.79 1.96-.79 1.96S2.2 8.8 2.2 10.4v1.2c0 1.6.2 3.2.2 3.2s.19 1.36.79 1.96c.76.79 1.76.76 2.21.85 1.6.15 6.6.2 6.6.2s4.05-.01 6.82-.21c.39-.05 1.23-.06 1.99-.85.6-.6.79-1.96.79-1.96s.2-1.6.2-3.2v-1.2c0-1.6-.2-3.2-.2-3.2zM9.9 13.9V8.5l5.2 2.7-5.2 2.7z"/></svg></a>
+          <a class="ig" href="https://www.instagram.com/genie202510000/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.1" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg></a>
+        </div>
       </div>
       <div><h4>コンテンツ</h4><a href="#">ニュース</a><a href="#">ブログ</a><a href="#">イベント</a><a href="#">メンバー紹介</a></div>
-      <div><h4>コミュニティ</h4><a href="#">公式LINE</a><a href="#">交流会</a><a href="#">講師陣</a><a href="#">お問い合わせ</a></div>
+      <div><h4>コミュニティ</h4><a href="https://lin.ee/SjBHjVV" target="_blank" rel="noopener">公式LINE</a><a href="#">交流会</a><a href="#">講師陣</a><a href="#">お問い合わせ</a></div>
     </div>
     <div class="copy">© 2026 教員コミュニティ ジーニー（プロトタイプ）</div>
   </div>
