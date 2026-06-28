@@ -2,12 +2,13 @@
    教員コミュニティ ジーニー — 共通スタイル
    ========================================================= */
 :root{
-  --bg:#FBF8F2; --bg-2:#fff7ee; --surface:#ffffff; --ink:#2c2a26; --muted:#6b665d;
-  --line:#e7e1d6; --brand:#2f6db3; --brand-d:#234f86; --accent:#e0773c; --accent-d:#c8612a;
+  /* ブランド：本家 genie-teacher.com（Cocoon）の key-color #1e73be 青 × 白 を再現 */
+  --bg:#ffffff; --bg-2:#eef5fb; --surface:#ffffff; --ink:#1f2a37; --muted:#5b6b7c;
+  --line:#e2e8f0; --brand:#1e73be; --brand-d:#15568f; --accent:#2ca9e1; --accent-d:#1c8fc4;
   --radius:16px; --radius-lg:22px; --max:1120px;
-  --shadow-sm:0 2px 10px rgba(70,55,30,.05);
-  --shadow:0 10px 30px rgba(60,50,30,.09);
-  --shadow-lg:0 18px 50px rgba(60,50,30,.13);
+  --shadow-sm:0 2px 10px rgba(30,60,100,.06);
+  --shadow:0 10px 30px rgba(30,60,100,.10);
+  --shadow-lg:0 18px 50px rgba(30,60,100,.14);
   --font-body:"Zen Kaku Gothic New","Hiragino Maru Gothic ProN","Yu Gothic",Meiryo,sans-serif;
   --font-head:"Zen Maru Gothic","Hiragino Maru Gothic ProN",sans-serif;
 }
@@ -21,18 +22,19 @@ h1,h2,h3,h4{font-family:var(--font-head);font-weight:700;line-height:1.5;letter-
 .eyebrow{font-size:12.5px;color:var(--accent);letter-spacing:.18em;font-weight:700;font-family:Georgia,"Times New Roman",serif}
 
 /* ---------- buttons ---------- */
-.btn{display:inline-flex;align-items:center;gap:8px;background:var(--brand);color:#fff;padding:11px 22px;border-radius:999px;font-size:14px;font-weight:700;border:none;cursor:pointer;transition:transform .15s,background .15s,box-shadow .15s;box-shadow:0 6px 18px rgba(47,109,179,.25)}
-.btn:hover{background:var(--brand-d);transform:translateY(-2px);box-shadow:0 10px 24px rgba(47,109,179,.32)}
-.btn.accent{background:var(--accent);box-shadow:0 6px 18px rgba(224,119,60,.28)}
+.btn{display:inline-flex;align-items:center;gap:8px;background:var(--brand);color:#fff;padding:11px 22px;border-radius:999px;font-size:14px;font-weight:700;border:none;cursor:pointer;transition:transform .15s,background .15s,box-shadow .15s;box-shadow:0 6px 18px rgba(30,115,190,.25)}
+.btn:hover{background:var(--brand-d);transform:translateY(-2px);box-shadow:0 10px 24px rgba(30,115,190,.32)}
+.btn.accent{background:var(--accent);box-shadow:0 6px 18px rgba(44,169,225,.28)}
 .btn.accent:hover{background:var(--accent-d)}
 .btn.ghost{background:transparent;color:var(--brand);border:1.5px solid var(--brand);box-shadow:none}
 .btn.ghost:hover{background:var(--brand);color:#fff}
 
 /* ---------- header ---------- */
-header.site{position:sticky;top:0;z-index:50;background:rgba(251,248,242,.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+header.site{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.88);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
 .nav{display:flex;align-items:center;gap:22px;height:68px}
 .logo{display:flex;align-items:center;gap:10px;font-family:var(--font-head);font-weight:700;font-size:20px;color:var(--ink)}
-.logo .mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--brand-d));color:#fff;display:grid;place-items:center;font-size:19px;box-shadow:0 4px 10px rgba(47,109,179,.3)}
+.logo .mark{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,var(--brand),var(--brand-d));color:#fff;display:grid;place-items:center;font-size:19px;box-shadow:0 4px 10px rgba(30,115,190,.3)}
+.logo .logo-img{height:38px;width:auto;display:block}
 .menu{display:flex;gap:22px;margin-left:auto;font-size:14.5px;color:var(--muted);font-weight:500}
 .menu a{position:relative;padding:4px 0}
 .menu a::after{content:"";position:absolute;left:0;right:100%;bottom:-2px;height:2px;background:var(--accent);border-radius:2px;transition:right .2s}
@@ -40,24 +42,24 @@ header.site{position:sticky;top:0;z-index:50;background:rgba(251,248,242,.85);ba
 .menu a:hover::after{right:0}
 .nav .btn{flex:none}
 .menu-btn{display:none;margin-left:auto;width:44px;height:44px;border-radius:12px;border:1.5px solid var(--line);background:#fff;font-size:20px;color:var(--brand);cursor:pointer;align-items:center;justify-content:center}
-.mobile-menu{display:none;flex-direction:column;gap:2px;padding:8px 20px 18px;background:rgba(251,248,242,.97);border-bottom:1px solid var(--line)}
+.mobile-menu{display:none;flex-direction:column;gap:2px;padding:8px 20px 18px;background:rgba(255,255,255,.98);border-bottom:1px solid var(--line)}
 .mobile-menu a{padding:12px 6px;border-bottom:1px solid var(--line);font-size:15px;color:var(--ink)}
 .mobile-menu a:last-of-type{border-bottom:none}
 .mobile-menu .btn{margin-top:12px;justify-content:center}
 .mobile-menu.open{display:flex}
 
 /* ---------- hero（トップ） ---------- */
-.hero{padding:64px 0 56px;background:radial-gradient(120% 90% at 85% 0%,#fff2e2 0%,var(--bg) 58%)}
+.hero{padding:64px 0 56px;background:radial-gradient(120% 90% at 85% 0%,#e3f1fb 0%,var(--bg) 58%)}
 .hero-inner{display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:40px}
 .hero .eyebrow{display:block;margin-bottom:14px}
 .hero h1{font-size:42px;letter-spacing:.02em}
 .hero h1 .em{color:var(--accent);position:relative;white-space:nowrap}
-.hero h1 .em::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:10px;background:rgba(224,119,60,.18);border-radius:6px;z-index:-1}
-.hero p.lead{margin-top:20px;font-size:17px;color:#5b554c;max-width:560px}
+.hero h1 .em::after{content:"";position:absolute;left:0;right:0;bottom:2px;height:10px;background:rgba(44,169,225,.20);border-radius:6px;z-index:-1}
+.hero p.lead{margin-top:20px;font-size:17px;color:#51606f;max-width:560px}
 .hero .cta{margin-top:30px;display:flex;gap:14px;flex-wrap:wrap}
 .hero .cta .btn{padding:14px 28px;font-size:15px}
 .hero-art{display:flex;justify-content:center}
-.hero-art svg{width:100%;max-width:420px;height:auto;filter:drop-shadow(0 18px 40px rgba(60,50,30,.12))}
+.hero-art svg{width:100%;max-width:420px;height:auto;filter:drop-shadow(0 18px 40px rgba(30,60,100,.12))}
 .trust{display:flex;gap:26px;margin-top:28px;flex-wrap:wrap}
 .trust .it{display:flex;flex-direction:column}
 .trust .n{font-family:var(--font-head);font-weight:700;font-size:22px;color:var(--brand)}
@@ -84,8 +86,9 @@ section.block{padding:58px 0}
 .card .thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .3s}
 .card:hover .thumb img{transform:scale(1.05)}
 /* サムネ無し記事のプレースホルダ */
-.thumb.ph{display:grid;place-items:center;text-align:center;padding:14px}
+.thumb.ph{display:grid;place-items:center;text-align:center;padding:14px;gap:5px}
 .thumb.ph .ph-cat{font-family:var(--font-head);font-weight:700;font-size:15px;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.18);z-index:1}
+.thumb.ph .ph-brand{font-size:10.5px;letter-spacing:.06em;color:rgba(255,255,255,.85);z-index:1}
 .thumb.ph::before{content:"G";position:absolute;right:-6px;bottom:-22px;font-family:Georgia,serif;font-weight:700;font-size:110px;color:rgba(255,255,255,.22);line-height:1}
 .card .body{padding:15px 17px 19px;display:flex;flex-direction:column;gap:9px;flex:1}
 .card h3{font-size:16.5px;line-height:1.55;margin:0}
@@ -104,23 +107,38 @@ section.block{padding:58px 0}
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
 .cal-grid .dow{text-align:center;font-size:12px;color:var(--muted);padding:6px 0;font-weight:700}
 .cal-grid .dow.sun{color:#d05a5a}.cal-grid .dow.sat{color:#5a7fd0}
-.cal-cell{min-height:70px;border:1px solid var(--line);border-radius:12px;padding:6px;background:#fffdf9;display:flex;flex-direction:column;gap:3px}
+.cal-cell{min-height:70px;border:1px solid var(--line);border-radius:12px;padding:6px;background:#fbfdff;display:flex;flex-direction:column;gap:3px}
 .cal-cell.empty{background:transparent;border:none}
 .cal-cell .num{font-weight:700;font-size:12.5px}
-.cal-cell.today{outline:2px solid var(--accent);outline-offset:-1px;background:#fff7ee}
+.cal-cell.today{outline:2px solid var(--accent);outline-offset:-1px;background:#eef5fb}
 .cal-cell .ev{font-size:10.5px;line-height:1.3;background:#eaf1fa;color:var(--brand-d);border-radius:6px;padding:2px 6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:600}
 .cal-cell .ev.warm{background:#fbe6d8;color:#a8481c}
 .cal-cell .ev:hover{filter:brightness(.96)}
-.cal-list{margin-top:20px;display:grid;gap:9px;max-width:580px;margin-inline:auto}
-.cal-list a{display:flex;gap:12px;align-items:center;font-size:14px;padding:11px 15px;border-radius:12px;background:#fff7ee;transition:.15s}
-.cal-list a:hover{background:#ffeede;transform:translateX(4px)}
-.cal-list .badge{flex:none;font-weight:700;color:var(--accent)}
-@media(max-width:600px){.cal-cell{min-height:48px}.cal-cell .ev{display:none}.cal-cell.has .num::after{content:"●";color:var(--accent);font-size:8px;margin-left:3px;vertical-align:2px}}
+
+/* スマホ用 アジェンダ（今月の予定リスト）— PCでは非表示、grid と併用 */
+.cal-agenda{display:none}
+.cal-agenda .ag-title{font-family:var(--font-head);font-weight:700;font-size:14px;color:var(--ink);margin:16px 2px 10px}
+.cal-agenda a{display:flex;gap:12px;align-items:center;font-size:14px;padding:11px 13px;border-radius:12px;background:#f4f8fc;border:1px solid var(--line);transition:.15s}
+.cal-agenda a:active{background:#e9f1fa}
+.cal-agenda a.warm{background:#fdf1e8;border-color:#f3d8c2}
+.cal-agenda .d{flex:none;min-width:62px;font-weight:700;color:var(--brand-d);font-size:13px}
+.cal-agenda a.warm .d{color:#b85a23}
+.cal-agenda .t{line-height:1.4}
+.cal-agenda .none{font-size:13.5px;color:var(--muted);padding:14px 4px;text-align:center}
+@media(max-width:600px){
+  .cal{padding:18px 14px}
+  .cal-grid{gap:4px}
+  .cal-cell{min-height:40px;padding:4px;border-radius:8px}
+  .cal-cell .ev{display:none}
+  .cal-cell.has .num::after{content:"●";color:var(--accent);font-size:8px;margin-left:3px;vertical-align:2px}
+  .cal-cell.has.warm-day .num::after{color:var(--accent-d)}
+  .cal-agenda{display:block}
+}
 
 /* ---------- CTA band ---------- */
 .band{position:relative;overflow:hidden;background:linear-gradient(135deg,var(--brand),var(--brand-d));color:#fff;border-radius:var(--radius-lg);padding:52px 46px;text-align:center}
 .band::before{content:"";position:absolute;inset:auto -60px -120px auto;width:280px;height:280px;border-radius:50%;background:rgba(255,255,255,.07)}
-.band::after{content:"";position:absolute;inset:-90px auto auto -50px;width:200px;height:200px;border-radius:50%;background:rgba(224,119,60,.18)}
+.band::after{content:"";position:absolute;inset:-90px auto auto -50px;width:200px;height:200px;border-radius:50%;background:rgba(44,169,225,.22)}
 .band>*{position:relative;z-index:1}
 .band h2{font-size:26px;color:#fff}
 .band p{margin:14px auto 26px;max-width:580px;color:#dce8f6}
@@ -128,20 +146,20 @@ section.block{padding:58px 0}
 .band .btn:hover{background:#fff;color:var(--brand)}
 
 /* ---------- footer ---------- */
-footer.site{background:#26241f;color:#cfc9bd;margin-top:48px;padding:50px 0 28px}
+footer.site{background:#143a5e;color:#cdd9e8;margin-top:48px;padding:50px 0 28px}
 .fcols{display:grid;grid-template-columns:2fr 1fr 1fr;gap:32px}
 footer.site h4{font-family:var(--font-head);color:#fff;margin-bottom:12px;font-size:16px}
 footer.site p{font-size:14px;max-width:380px}
-footer.site a{display:block;color:#cfc9bd;font-size:14px;padding:4px 0}
+footer.site a{display:block;color:#cdd9e8;font-size:14px;padding:4px 0}
 footer.site a:hover{color:#fff}
 .social{display:flex;gap:10px;margin-top:16px}
-.social a{width:42px;height:42px;border-radius:50%;background:#3a372f;color:#cfc9bd;display:grid;place-items:center;transition:transform .15s,background .15s,color .15s}
+.social a{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.12);color:#cdd9e8;display:grid;place-items:center;transition:transform .15s,background .15s,color .15s}
 .social a svg{width:20px;height:20px;display:block}
 .social a:hover{transform:translateY(-3px)}
 .social a.line:hover{background:#06C755;color:#fff}
 .social a.yt:hover{background:#FF0000;color:#fff}
 .social a.ig:hover{background:#E1306C;color:#fff}
-.copy{text-align:center;border-top:1px solid #3a372f;margin-top:36px;padding-top:18px;font-size:12px;color:#8d887d}
+.copy{text-align:center;border-top:1px solid rgba(255,255,255,.15);margin-top:36px;padding-top:18px;font-size:12px;color:#9fb2c8}
 
 /* ---------- responsive ---------- */
 @media(max-width:820px){

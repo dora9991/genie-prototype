@@ -57,13 +57,13 @@
       if(s.colors.brand){ root.setProperty('--brand', s.colors.brand); root.setProperty('--brand-d', darken(s.colors.brand,0.2)); }
       if(s.colors.accent){ root.setProperty('--accent', s.colors.accent); root.setProperty('--accent-d', darken(s.colors.accent,0.13)); }
     }
-    // ロゴ（マーク＋サイト名）
-    document.querySelectorAll('.logo').forEach(function(l){
-      var mark = s.logoImage
-        ? '<span class="mark" style="background-image:url('+s.logoImage+');background-size:cover;color:transparent">G</span>'
-        : '<span class="mark">'+esc(s.logoText||'G')+'</span>';
-      l.innerHTML = mark + esc(s.siteName||'ジーニー');
-    });
+    // ロゴ：API に logoImage がある時だけ差し替える。
+    // 無ければ HTML に直書きした本物のロゴ画像（images/genie-logo.png）をそのまま残す。
+    if(s.logoImage){
+      document.querySelectorAll('.logo').forEach(function(l){
+        l.innerHTML = '<img class="logo-img" src="'+esc(s.logoImage)+'" alt="'+esc(s.siteName||'教員コミュニティ ジーニー')+'">';
+      });
+    }
     // リンク
     if(s.links){
       if(s.links.line) document.querySelectorAll('a[href*="lin.ee"], a.line').forEach(function(a){a.href=s.links.line;});
@@ -81,7 +81,7 @@
       }
       var ld=document.getElementById('heroLead'); if(ld&&s.hero.lead) ld.textContent=s.hero.lead;
       var art=document.getElementById('heroArt');
-      if(art&&s.hero.image){ art.innerHTML='<img src="'+esc(s.hero.image)+'" alt="" style="width:100%;max-width:440px;border-radius:20px;box-shadow:0 18px 40px rgba(60,50,30,.18)">'; }
+      if(art&&s.hero.image){ art.innerHTML='<img src="'+esc(s.hero.image)+'" alt="" style="width:100%;max-width:440px;border-radius:20px;box-shadow:0 18px 40px rgba(30,60,100,.18)">'; }
     }
     // お知らせ帯
     if(s.band){
@@ -111,22 +111,23 @@
   // --- カテゴリ別の配色（タグ色＋プレースホルダのグラデ）---
   var CAT = {
     'イベント報告':{bg:'#fbe6d8',fg:'#a8481c',g1:'#f6c89a',g2:'#e0773c'},
-    'ブログ'      :{bg:'#eaf1fa',fg:'#234f86',g1:'#9cc2ec',g2:'#2f6db3'},
+    'ブログ'      :{bg:'#eaf1fa',fg:'#15568f',g1:'#8fc1ec',g2:'#1e73be'},
     'メンバー紹介':{bg:'#e3f1e7',fg:'#3f7a52',g1:'#a9d6b4',g2:'#5a9e6f'},
     'News'        :{bg:'#fbe3e3',fg:'#a83c3c',g1:'#f0a9a9',g2:'#d05a5a'},
     '講師陣'      :{bg:'#ece8fa',fg:'#5648a0',g1:'#c3b8ec',g2:'#7b6cc4'},
     'イベント'    :{bg:'#def2ef',fg:'#2c7a6f',g1:'#9bd9d2',g2:'#3fa093'},
     'コラム'      :{bg:'#f2e8d8',fg:'#7a5e2f',g1:'#d8c2a0',g2:'#a8854f'}
   };
-  function cat(c){ return CAT[c] || {bg:'#eaf1fa',fg:'#234f86',g1:'#9cc2ec',g2:'#2f6db3'}; }
+  function cat(c){ return CAT[c] || {bg:'#eaf1fa',fg:'#15568f',g1:'#8fc1ec',g2:'#1e73be'}; }
 
   // --- 記事カードのHTML ---
   function cardHTML(p){
     var c = cat(p.category);
     var thumb = p.thumb
       ? '<div class="thumb"><img src="'+esc(p.thumb)+'" alt="" loading="lazy"></div>'
-      : '<div class="thumb ph" style="background:linear-gradient(135deg,'+c.g1+','+c.g2+')">'
-        + '<span class="ph-cat">'+esc(p.category||'記事')+'</span></div>';
+      : '<div class="thumb ph" style="background:linear-gradient(135deg,#4ba3e0,#1e73be)">'
+        + '<span class="ph-cat">'+esc(p.category||'記事')+'</span>'
+        + '<span class="ph-brand">教員コミュニティ ジーニー</span></div>';
     return '<a class="card" href="post.html?slug='+encodeURIComponent(p.slug)+'">'+thumb+
       '<div class="body">'+
         '<span class="tag" style="background:'+c.bg+';color:'+c.fg+'">'+esc(p.category)+'</span>'+

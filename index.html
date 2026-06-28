@@ -3,6 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!-- ローンチまでは検索エンジンに載せない（本番 genie-teacher.com とのSEO重複回避）-->
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet" />
 <title>教員コミュニティ ジーニー｜学校でも家庭でもない“本音”を語れる第３の居場所</title>
 <meta name="description" content="教員コミュニティ『ジーニー』は、先生方が安心して学び合い、つながれるオンラインの居場所です。毎週の定例交流会・実践シェア・イベントを通じて、一人で抱え込まない教員人生を応援します。" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,7 +13,7 @@
 <link rel="stylesheet" href="assets/site.css">
 <style>
   /* 本家風スライダー（ヒーロー右） */
-  .slider{position:relative;width:100%;aspect-ratio:16/10;border-radius:18px;overflow:hidden;box-shadow:0 14px 36px rgba(60,50,30,.14);background:#e7e1d6}
+  .slider{position:relative;width:100%;aspect-ratio:16/10;border-radius:18px;overflow:hidden;box-shadow:0 14px 36px rgba(30,60,100,.16);background:#dce7f1}
   .slider .sl{position:absolute;inset:0;opacity:0;transition:opacity .8s ease}
   .slider .sl.on{opacity:1}
   .slider .sl img{width:100%;height:100%;object-fit:cover;display:block}
@@ -21,9 +23,16 @@
   /* 講師・メンバー丸アイコン */
   .members{display:grid;grid-template-columns:repeat(auto-fill,minmax(108px,1fr));gap:20px 14px}
   .member{text-align:center}
-  .member .ava{width:86px;height:86px;border-radius:50%;object-fit:cover;margin:0 auto;display:block;border:3px solid #fff;box-shadow:0 5px 16px rgba(60,50,30,.14);background:#eee;transition:transform .15s}
+  /* object-position を上寄りにして顔が見切れないように */
+  .member .ava{width:86px;height:86px;border-radius:50%;object-fit:cover;object-position:center 22%;margin:0 auto;display:block;border:3px solid #fff;box-shadow:0 5px 16px rgba(30,60,100,.16);background:#eef2f7;transition:transform .15s}
   .member:hover .ava{transform:translateY(-4px)}
   .member .nm{font-size:13px;margin-top:9px;font-weight:700;line-height:1.45;color:var(--ink)}
+  .member .role{display:block;font-size:11px;font-weight:600;margin-top:2px;color:var(--muted)}
+  /* セクション内の小見出し（講師陣／メンバー紹介の区切り）*/
+  .members-group + .members-group{margin-top:34px}
+  .group-label{display:flex;align-items:center;gap:10px;font-family:var(--font-head);font-weight:700;font-size:18px;color:var(--ink);margin-bottom:16px}
+  .group-label .pill{font-size:11px;font-weight:700;padding:3px 11px;border-radius:999px;background:var(--brand);color:#fff}
+  .group-label .pill.mem{background:#5a9e6f}
   /* 最上部の全幅ヒーローバナー（左右いっぱい） */
   .topbanner{display:block;width:100%;line-height:0;background:#cfe6f5}
   .topbanner img{width:100%;height:auto;display:block}
@@ -33,7 +42,7 @@
 
 <header class="site">
   <div class="wrap nav">
-    <a class="logo" href="index.html"><span class="mark">G</span>ジーニー</a>
+    <a class="logo" href="index.html"><img class="logo-img" src="images/genie-logo.png" alt="教員コミュニティ ジーニー"></a>
     <nav class="menu">
       <a href="#news">ニュース</a>
       <a href="articles.html?cat=ブログ">ブログ</a>
@@ -103,10 +112,12 @@
         <button id="calNext" aria-label="次の月">›</button>
       </div>
       <div class="cal-legend">
-        <span><i style="background:#2f6db3"></i>定例交流会（毎週水・木 21:00）</span>
+        <span><i style="background:#1e73be"></i>定例交流会（毎週水・木 21:00）</span>
         <span><i style="background:#e0773c"></i>特別イベント</span>
       </div>
       <div class="cal-grid" id="calGrid"></div>
+      <!-- スマホ用：今月の予定を一覧で（カレンダーのマス目では潰れて見えないため）-->
+      <div class="cal-agenda" id="calAgenda"></div>
     </div>
   </div>
 </section>
@@ -125,9 +136,19 @@
   <div class="wrap">
     <div class="sec-head">
       <div><span class="eyebrow">MEMBERS</span><h2>講師・メンバー紹介</h2></div>
-      <a class="more" href="articles.html?cat=講師陣">すべて見る →</a>
     </div>
-    <div class="members" id="memberGrid"></div>
+
+    <div class="members-group">
+      <div class="group-label"><span class="pill">講師陣</span>専門分野をリードする先生方</div>
+      <div class="members" id="instructorGrid"></div>
+      <div style="text-align:right;margin-top:14px"><a class="more" href="articles.html?cat=講師陣">講師陣をすべて見る →</a></div>
+    </div>
+
+    <div class="members-group">
+      <div class="group-label"><span class="pill mem">メンバー</span>ともに学び合う仲間たち</div>
+      <div class="members" id="memberGrid"></div>
+      <div style="text-align:right;margin-top:14px"><a class="more" href="articles.html?cat=メンバー紹介">メンバーをすべて見る →</a></div>
+    </div>
   </div>
 </section>
 
@@ -168,7 +189,7 @@
   var dows = ['日','月','火','水','木','金','土'];
   var cur = new Date(); cur.setDate(1);
   var grid = document.getElementById('calGrid');
-  var list = document.getElementById('calList');
+  var agenda = document.getElementById('calAgenda');
   var title = document.getElementById('calTitle');
   var REC = [], SPECIAL = {};   // REC: 曜日ごと, SPECIAL: 日付ごと
   function pad(n){return (n<10?'0':'')+n;}
@@ -187,10 +208,24 @@
       REC.forEach(function(r){ if(Number(r.dow)===dow) evs.push({t:r.title,warm:!!r.warm,link:'community.html'}); });
       if(SPECIAL[key(y,m,d)]) SPECIAL[key(y,m,d)].forEach(function(s){ evs.push({t:s.title,warm:!!s.warm,link:s.link||LINK}); });
       var html='<span class="num">'+d+'</span>';
-      evs.forEach(function(ev){html+='<a class="ev'+(ev.warm?' warm':'')+'" href="'+ev.link+'" target="_blank" rel="noopener" title="'+GENIE.esc(ev.t)+'">'+GENIE.esc(ev.t)+'</a>';month.push({d:d,dow:dow,t:ev.t,link:ev.link});});
+      var hasWarm=false;
+      evs.forEach(function(ev){if(ev.warm)hasWarm=true;html+='<a class="ev'+(ev.warm?' warm':'')+'" href="'+ev.link+'" target="_blank" rel="noopener" title="'+GENIE.esc(ev.t)+'">'+GENIE.esc(ev.t)+'</a>';month.push({d:d,dow:dow,t:ev.t,link:ev.link,warm:ev.warm});});
       if(evs.length)cell.classList.add('has');
+      if(hasWarm)cell.classList.add('warm-day');
       if(today.getFullYear()===y&&today.getMonth()===m&&today.getDate()===d)cell.classList.add('today');
       cell.innerHTML=html; grid.appendChild(cell);
+    }
+    // スマホ用アジェンダ（今月の予定を日付つきリストで）
+    if(agenda){
+      if(month.length){
+        agenda.innerHTML='<div class="ag-title">'+(m+1)+'月の予定</div>'+ month.map(function(e){
+          return '<a class="'+(e.warm?'warm':'')+'" href="'+e.link+'" target="_blank" rel="noopener">'+
+            '<span class="d">'+(m+1)+'/'+e.d+'（'+dows[e.dow]+'）</span>'+
+            '<span class="t">'+GENIE.esc(e.t)+'</span></a>';
+        }).join('');
+      } else {
+        agenda.innerHTML='<div class="ag-title">'+(m+1)+'月の予定</div><div class="none">この月の予定は準備中です。最新はLINEでご案内します。</div>';
+      }
     }
   }
   document.getElementById('calPrev').onclick=function(){cur.setMonth(cur.getMonth()-1);render();};
@@ -238,14 +273,26 @@
   }).catch(function(){});
 })();
 
-// ---- 講師・メンバーの丸アイコン一覧 ----
+// ---- 講師陣・メンバーの丸アイコン一覧（別々に表示）----
 (function(){
-  var g=document.getElementById('memberGrid'); if(!g||!window.GENIE) return;
+  var gi=document.getElementById('instructorGrid'), gm=document.getElementById('memberGrid');
+  if((!gi&&!gm)||!window.GENIE) return;
+  // 【ジーニーメンバー】等の肩書きを名前から外して見やすく
+  function cleanName(t){ return (t||'').replace(/【[^】]*】/g,'').trim().slice(0,16); }
+  function tile(p){
+    return '<a class="member" href="post.html?slug='+encodeURIComponent(p.slug)+'">'+
+      '<img class="ava" src="'+GENIE.esc(p.thumb)+'" alt="'+GENIE.esc(cleanName(p.title))+'" loading="lazy">'+
+      '<div class="nm">'+GENIE.esc(cleanName(p.title))+'</div></a>';
+  }
   GENIE.getPosts().then(function(posts){
-    var m=posts.filter(function(p){return (p.category==='講師陣'||p.category==='メンバー紹介') && p.thumb;}).slice(0,18);
-    g.innerHTML=m.map(function(p){
-      return '<a class="member" href="post.html?slug='+encodeURIComponent(p.slug)+'"><img class="ava" src="'+GENIE.esc(p.thumb)+'" alt="" loading="lazy"><div class="nm">'+GENIE.esc((p.title||'').slice(0,16))+'</div></a>';
-    }).join('');
+    if(gi){
+      var ins=posts.filter(function(p){return p.category==='講師陣' && p.thumb;});
+      gi.innerHTML=ins.map(tile).join('');
+    }
+    if(gm){
+      var mem=posts.filter(function(p){return p.category==='メンバー紹介' && p.thumb;}).slice(0,18);
+      gm.innerHTML=mem.map(tile).join('');
+    }
   }).catch(function(){});
 })();
 </script>
