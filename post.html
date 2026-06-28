@@ -7,64 +7,100 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
-<style>
-  :root{--bg:#FBF8F2;--surface:#fff;--ink:#2c2a26;--muted:#6b665d;--line:#e7e1d6;--brand:#2f6db3;--brand-d:#234f86;--accent:#e0773c}
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:"Zen Kaku Gothic New","Hiragino Maru Gothic ProN",sans-serif;color:var(--ink);background:var(--bg);line-height:1.95;letter-spacing:.015em}
-  a{color:var(--brand);text-decoration:none}
-  h1,h2,h3,h4{font-family:"Zen Maru Gothic","Hiragino Maru Gothic ProN",sans-serif;line-height:1.55}
-  header{background:rgba(251,248,242,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);position:sticky;top:0;z-index:30}
-  .nav{max-width:1120px;margin:0 auto;padding:0 20px;height:64px;display:flex;align-items:center;gap:18px}
-  .logo{display:flex;align-items:center;gap:10px;font-family:"Zen Maru Gothic",sans-serif;font-weight:700;font-size:20px;color:var(--ink)}
-  .logo .mark{width:32px;height:32px;border-radius:9px;background:var(--brand);color:#fff;display:grid;place-items:center}
-  .nav .sp{margin-left:auto;font-size:14px}
-  .article{max-width:760px;margin:0 auto;padding:34px 20px 60px}
-  .back{font-size:14px;color:var(--muted)}
-  .tag{display:inline-block;font-size:12px;font-weight:700;color:var(--brand-d);background:#eaf1fa;padding:4px 12px;border-radius:999px;margin:18px 0 10px}
-  .article h1{font-size:30px;margin-bottom:10px;line-height:1.5}
-  .meta{color:var(--muted);font-size:14px;border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:24px}
-  .body{font-size:16.5px}
-  .body p{margin:0 0 1.2em}
-  .body h2{font-size:23px;margin:1.8em 0 .7em;padding-left:12px;border-left:5px solid var(--accent)}
-  .body h3{font-size:19px;margin:1.5em 0 .6em}
-  .body img{max-width:100%;height:auto;border-radius:12px;margin:1em 0}
-  .body ul,.body ol{margin:0 0 1.2em 1.4em}
-  .body li{margin:.3em 0}
-  .body blockquote{border-left:4px solid var(--brand);background:#f3f7fc;padding:12px 18px;border-radius:0 10px 10px 0;margin:1.2em 0;color:#3a4a5c}
-  .body a{text-decoration:underline}
-  .body figure{margin:1em 0}
-  .wp-block-spacer{display:block}
-  .marker-under-blue{background:linear-gradient(transparent 62%,#bfe0ff 62%)}
-  .marker-under-red{background:linear-gradient(transparent 62%,#ffc7c7 62%)}
-  .marker-under-yellow{background:linear-gradient(transparent 62%,#fff1a8 62%)}
-  .marker-blue{background:#bfe0ff}.marker-red{background:#ffc7c7}.marker-yellow{background:#fff1a8}
-  footer{background:#26241f;color:#cfc9bd;padding:30px 20px;text-align:center;font-size:13px}
-</style>
+<link rel="stylesheet" href="assets/site.css">
 </head>
 <body>
-<header><div class="nav"><a class="logo" href="index.html"><span class="mark">G</span>ジーニー</a><a class="sp" href="articles.html">記事一覧</a></div></header>
+
+<header class="site">
+  <div class="wrap nav">
+    <a class="logo" href="index.html"><span class="mark">G</span>ジーニー</a>
+    <nav class="menu">
+      <a href="index.html#news">ニュース</a>
+      <a href="articles.html?cat=ブログ">ブログ</a>
+      <a href="index.html#events">イベント</a>
+      <a href="articles.html?cat=メンバー紹介">メンバー紹介</a>
+      <a href="articles.html?cat=講師陣">講師陣</a>
+    </nav>
+    <a class="btn" href="https://lin.ee/SjBHjVV" target="_blank" rel="noopener">公式LINE登録</a>
+    <button class="menu-btn" aria-label="メニューを開く">☰</button>
+  </div>
+  <nav class="mobile-menu">
+    <a href="index.html#news">ニュース</a>
+    <a href="articles.html?cat=ブログ">ブログ</a>
+    <a href="index.html#events">イベント</a>
+    <a href="articles.html?cat=メンバー紹介">メンバー紹介</a>
+    <a href="articles.html?cat=講師陣">講師陣</a>
+    <a class="btn" href="https://lin.ee/SjBHjVV" target="_blank" rel="noopener">公式LINE登録</a>
+  </nav>
+</header>
 
 <article class="article">
   <a class="back" href="articles.html">← 記事一覧へ</a>
   <div id="content"><p style="color:var(--muted);margin-top:30px">読み込み中…</p></div>
-  <p style="margin-top:40px"><a class="back" href="articles.html">← 記事一覧へ戻る</a></p>
 </article>
 
-<footer>© 2026 教員コミュニティ ジーニー（プロトタイプ）</footer>
+<div class="art-foot">
+  <div class="art-cta">
+    <h3>「ジーニー」で、もっとつながる。</h3>
+    <p>毎週の定例交流会や実践シェア会のご案内は公式LINEから。登録特典もご用意しています。</p>
+    <a class="btn accent" href="https://lin.ee/SjBHjVV" target="_blank" rel="noopener">公式LINEに登録する</a>
+  </div>
+  <section class="related" id="related" style="display:none">
+    <h2>関連記事</h2>
+    <div class="grid" id="relatedGrid"></div>
+  </section>
+  <p style="margin:36px 0 0"><a class="back" href="articles.html">← 記事一覧へ戻る</a></p>
+</div>
 
+<footer class="site">
+  <div class="wrap">
+    <div class="fcols">
+      <div>
+        <h4>教員コミュニティ ジーニー</h4>
+        <p>学校でも家庭でもない“本音”を語れる第３の居場所。「一人で抱え込まない教員人生」を応援する、対話型の学びのコミュニティです。</p>
+        <div class="social">
+          <a class="line" href="https://lin.ee/SjBHjVV" target="_blank" rel="noopener" aria-label="公式LINE"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 3C6.9 3 2.75 6.46 2.75 10.73c0 3.82 3.3 7.02 7.76 7.63.3.06.71.2.82.46.09.24.06.6.03.85l-.13.8c-.04.24-.19.94.82.51 1.01-.42 5.46-3.22 7.45-5.51 1.37-1.5 2-3.03 2-4.73C21.5 6.46 17.34 3 12 3z"/></svg></a>
+          <a class="yt" href="https://www.youtube.com/@%E3%82%B8%E3%83%BC%E3%83%8B%E3%83%BC-m3h" target="_blank" rel="noopener" aria-label="YouTube"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.6 7.2s-.19-1.36-.79-1.96c-.76-.79-1.6-.8-1.99-.84C16.05 4.2 12 4.2 12 4.2h-.01s-4.04 0-6.81.2c-.39.05-1.23.06-1.99.85-.6.6-.79 1.96-.79 1.96S2.2 8.8 2.2 10.4v1.2c0 1.6.2 3.2.2 3.2s.19 1.36.79 1.96c.76.79 1.76.76 2.21.85 1.6.15 6.6.2 6.6.2s4.05-.01 6.82-.21c.39-.05 1.23-.06 1.99-.85.6-.6.79-1.96.79-1.96s.2-1.6.2-3.2v-1.2c0-1.6-.2-3.2-.2-3.2zM9.9 13.9V8.5l5.2 2.7-5.2 2.7z"/></svg></a>
+          <a class="ig" href="https://www.instagram.com/genie202510000/" target="_blank" rel="noopener" aria-label="Instagram"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.2" y="3.2" width="17.6" height="17.6" rx="5" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.1" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.3" cy="6.7" r="1.2" fill="currentColor"/></svg></a>
+        </div>
+      </div>
+      <div><h4>コンテンツ</h4><a href="index.html#news">ニュース</a><a href="articles.html?cat=ブログ">ブログ</a><a href="index.html#events">イベント</a><a href="articles.html?cat=メンバー紹介">メンバー紹介</a></div>
+      <div><h4>コミュニティ</h4><a href="https://lin.ee/SjBHjVV" target="_blank" rel="noopener">公式LINE</a><a href="index.html#events">交流会</a><a href="articles.html?cat=講師陣">講師陣</a></div>
+    </div>
+    <div class="copy">© 2026 教員コミュニティ ジーニー</div>
+  </div>
+</footer>
+
+<script src="assets/site.js"></script>
 <script>
 (function(){
   var slug=new URLSearchParams(location.search).get('slug');
   fetch('data/posts.json').then(function(r){return r.json();}).then(function(posts){
-    var p=posts.filter(function(x){return x.slug===slug;})[0]||posts[0];
+    var idx=posts.findIndex(function(x){return x.slug===slug;});
+    var p=idx>=0?posts[idx]:posts[0];
     if(!p){document.getElementById('content').innerHTML='<p>記事が見つかりませんでした。</p>';return;}
     document.title=p.title+'｜教員コミュニティ ジーニー';
+    var c=GENIE.cat(p.category);
+    var hero=p.thumb
+      ? '<div class="art-hero"><img src="'+GENIE.esc(p.thumb)+'" alt=""></div>'
+      : '';
     document.getElementById('content').innerHTML=
-      '<span class="tag">'+p.category+'</span>'+
-      '<h1>'+p.title.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</h1>'+
-      '<div class="meta">'+(p.date||'').replace(/-/g,'.')+'</div>'+
-      '<div class="body">'+p.html+'</div>';
-  });
+      hero+
+      '<div class="art-head">'+
+        '<span class="tag" style="background:'+c.bg+';color:'+c.fg+'">'+GENIE.esc(p.category)+'</span>'+
+        '<h1>'+GENIE.esc(p.title)+'</h1>'+
+        '<div class="art-meta"><span>'+GENIE.esc((p.date||'').replace(/-/g,'.'))+'</span></div>'+
+      '</div>'+
+      '<div class="body">'+(p.html||'')+'</div>';
+
+    // 関連記事（同じカテゴリ・新しい順から最大3件）
+    var rel=posts.filter(function(x){return x.slug!==p.slug && x.category===p.category;}).slice(0,3);
+    if(rel.length){
+      document.getElementById('relatedGrid').innerHTML=rel.map(GENIE.cardHTML).join('');
+      document.getElementById('related').style.display='';
+    }
+    window.scrollTo({top:0});
+  }).catch(function(e){document.getElementById('content').innerHTML='<p>記事の読み込みに失敗しました。</p>';});
 })();
 </script>
 </body>
