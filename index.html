@@ -38,9 +38,9 @@
 <section class="hero">
   <div class="wrap hero-inner">
     <div class="hero-text">
-      <span class="eyebrow">TEACHERS' COMMUNITY</span>
-      <h1>学校でも家庭でもない、<br><span class="em">“本音”</span>を語れる第３の居場所。</h1>
-      <p class="lead">教員コミュニティ『ジーニー』は、先生方が安心して学び合い、つながれるオンラインの居場所です。一人で抱え込まない教員人生を、ここから。</p>
+      <span class="eyebrow" id="heroEyebrow">TEACHERS' COMMUNITY</span>
+      <h1 id="heroHeadline">学校でも家庭でもない、<br><span class="em">“本音”</span>を語れる第３の居場所。</h1>
+      <p class="lead" id="heroLead">教員コミュニティ『ジーニー』は、先生方が安心して学び合い、つながれるオンラインの居場所です。一人で抱え込まない教員人生を、ここから。</p>
       <div class="cta">
         <a class="btn accent" href="https://lin.ee/SjBHjVV" target="_blank" rel="noopener">公式LINEに登録する</a>
         <a class="btn ghost" href="#articles">記事を読む</a>
@@ -51,7 +51,7 @@
         <div class="it"><span class="n">無料</span><span class="l">LINE登録特典つき</span></div>
       </div>
     </div>
-    <div class="hero-art" aria-hidden="true">
+    <div class="hero-art" id="heroArt" aria-hidden="true">
       <svg viewBox="0 0 420 380" xmlns="http://www.w3.org/2000/svg">
         <circle cx="225" cy="180" r="160" fill="#fff" opacity=".55"/>
         <circle cx="225" cy="180" r="160" fill="none" stroke="#e7e1d6" stroke-width="2" stroke-dasharray="3 8"/>
@@ -128,9 +128,9 @@
 <section class="block">
   <div class="wrap">
     <div class="band">
-      <h2>教員コミュニティ『ジーニー』でできること</h2>
-      <p>公式LINE登録で「AI時短テンプレート」と「教員ウェルビーイング診断」を無料プレゼント。全国の先生とつながり、学び合える環境がここにあります。</p>
-      <a class="btn" href="https://lin.ee/SjBHjVV" target="_blank" rel="noopener">公式LINEに登録する</a>
+      <h2 id="bandHeading">教員コミュニティ『ジーニー』でできること</h2>
+      <p id="bandText">公式LINE登録で「AI時短テンプレート」と「教員ウェルビーイング診断」を無料プレゼント。全国の先生とつながり、学び合える環境がここにあります。</p>
+      <a class="btn" id="bandBtn" href="https://lin.ee/SjBHjVV" target="_blank" rel="noopener">公式LINEに登録する</a>
     </div>
   </div>
 </section>
@@ -202,9 +202,15 @@
   });
 })();
 
-// ---- 記事一覧（管理画面のAPIから取得）----
+// ---- 記事一覧（管理画面のAPIから取得・おすすめ記事を先頭に固定）----
 (function(){
-  GENIE.getPosts().then(function(posts){
+  Promise.all([GENIE.getPosts(), GENIE.getSettings()]).then(function(res){
+    var posts=res[0], s=res[1]||{}, feat=(s.featured||[]);
+    if(feat.length){
+      var f=posts.filter(function(p){return feat.indexOf(p.slug)>=0;});
+      var rest=posts.filter(function(p){return feat.indexOf(p.slug)<0;});
+      posts=f.concat(rest);
+    }
     var g=document.getElementById('postGrid');
     if(g) g.innerHTML=posts.slice(0,6).map(GENIE.cardHTML).join('');
     var rep=document.getElementById('reportGrid');

@@ -36,6 +36,71 @@
     return { recurring:[{dow:3,title:"定例交流会 21:00",warm:0},{dow:4,title:"定例交流会 21:00",warm:0}], special:[] };
   }
 
+  // ---- サイト設定（カラー・文言・リンク・ロゴ）----
+  var SETTINGS = null;
+  async function getSettings(){
+    if (SETTINGS) return SETTINGS;
+    try{ var r = await fetch(API + "/api/settings"); if(r.ok){ SETTINGS = await r.json(); return SETTINGS; } }catch(e){}
+    SETTINGS = {}; return SETTINGS;
+  }
+  function darken(hex, amt){
+    try{ hex=(hex||'').replace('#',''); if(hex.length!==6) return '#'+hex;
+      var n=parseInt(hex,16), r=(n>>16)&255, g=(n>>8)&255, b=n&255;
+      r=Math.round(r*(1-amt)); g=Math.round(g*(1-amt)); b=Math.round(b*(1-amt));
+      return '#'+((1<<24)+(r<<16)+(g<<8)+b).toString(16).slice(1);
+    }catch(e){ return '#'+hex; }
+  }
+  function applySettings(s){
+    if(!s) return;
+    var root=document.documentElement.style;
+    if(s.colors){
+      if(s.colors.brand){ root.setProperty('--brand', s.colors.brand); root.setProperty('--brand-d', darken(s.colors.brand,0.2)); }
+      if(s.colors.accent){ root.setProperty('--accent', s.colors.accent); root.setProperty('--accent-d', darken(s.colors.accent,0.13)); }
+    }
+    // ロゴ（マーク＋サイト名）
+    document.querySelectorAll('.logo').forEach(function(l){
+      var mark = s.logoImage
+        ? '<span class="mark" style="background-image:url('+s.logoImage+');background-size:cover;color:transparent">G</span>'
+        : '<span class="mark">'+esc(s.logoText||'G')+'</span>';
+      l.innerHTML = mark + esc(s.siteName||'ジーニー');
+    });
+    // リンク
+    if(s.links){
+      if(s.links.line) document.querySelectorAll('a[href*="lin.ee"], a.line').forEach(function(a){a.href=s.links.line;});
+      if(s.links.youtube) document.querySelectorAll('.social a.yt').forEach(function(a){a.href=s.links.youtube;});
+      if(s.links.instagram) document.querySelectorAll('.social a.ig').forEach(function(a){a.href=s.links.instagram;});
+    }
+    // ヒーロー（トップのみ）
+    if(s.hero){
+      var ey=document.getElementById('heroEyebrow'); if(ey&&s.hero.eyebrow) ey.textContent=s.hero.eyebrow;
+      var hl=document.getElementById('heroHeadline');
+      if(hl&&s.hero.headline){
+        var html=esc(s.hero.headline).replace(/\n/g,'<br>');
+        if(s.hero.emphasis){ html=html.split(esc(s.hero.emphasis)).join('<span class="em">'+esc(s.hero.emphasis)+'</span>'); }
+        hl.innerHTML=html;
+      }
+      var ld=document.getElementById('heroLead'); if(ld&&s.hero.lead) ld.textContent=s.hero.lead;
+      var art=document.getElementById('heroArt');
+      if(art&&s.hero.image){ art.innerHTML='<img src="'+esc(s.hero.image)+'" alt="" style="width:100%;max-width:440px;border-radius:20px;box-shadow:0 18px 40px rgba(60,50,30,.18)">'; }
+    }
+    // お知らせ帯
+    if(s.band){
+      var bh=document.getElementById('bandHeading'); if(bh&&s.band.heading) bh.textContent=s.band.heading;
+      var bt=document.getElementById('bandText'); if(bt&&s.band.text) bt.textContent=s.band.text;
+      var bb=document.getElementById('bandBtn'); if(bb&&s.band.button) bb.textContent=s.band.button;
+    }
+    // フッター紹介文
+    if(s.footerText){ var ft=document.querySelector('footer.site .fcols>div:first-child>p'); if(ft) ft.textContent=s.footerText; }
+  }
+  async function loadSettings(){
+    try{ var c=localStorage.getItem('genieSettings'); if(c) applySettings(JSON.parse(c)); }catch(e){}
+    var s=await getSettings();
+    if(s && Object.keys(s).length){ try{localStorage.setItem('genieSettings',JSON.stringify(s));}catch(e){} applySettings(s); }
+  }
+  // 即時適用（色のチラつきを抑える）
+  if(document.readyState!=='loading'){ loadSettings(); }
+  else{ document.addEventListener('DOMContentLoaded', loadSettings); }
+
   // --- HTMLエスケープ ---
   function esc(s){
     return (s||'').replace(/[&<>"]/g,function(c){
@@ -81,5 +146,5 @@
 
   // --- 公開API ---
   window.GENIE = { esc:esc, cat:cat, cardHTML:cardHTML, LINE:LINE, API:API,
-                   getPosts:getPosts, getPost:getPost, getEvents:getEvents };
+                   getPosts:getPosts, getPost:getPost, getEvents:getEvents, getSettings:getSettings };
 })();
