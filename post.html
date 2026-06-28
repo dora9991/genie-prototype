@@ -75,9 +75,7 @@
 <script>
 (function(){
   var slug=new URLSearchParams(location.search).get('slug');
-  fetch('data/posts.json').then(function(r){return r.json();}).then(function(posts){
-    var idx=posts.findIndex(function(x){return x.slug===slug;});
-    var p=idx>=0?posts[idx]:posts[0];
+  GENIE.getPost(slug).then(function(p){
     if(!p){document.getElementById('content').innerHTML='<p>記事が見つかりませんでした。</p>';return;}
     document.title=p.title+'｜教員コミュニティ ジーニー';
     var c=GENIE.cat(p.category);
@@ -92,14 +90,16 @@
         '<div class="art-meta"><span>'+GENIE.esc((p.date||'').replace(/-/g,'.'))+'</span></div>'+
       '</div>'+
       '<div class="body">'+(p.html||'')+'</div>';
+    window.scrollTo({top:0});
 
     // 関連記事（同じカテゴリ・新しい順から最大3件）
-    var rel=posts.filter(function(x){return x.slug!==p.slug && x.category===p.category;}).slice(0,3);
-    if(rel.length){
-      document.getElementById('relatedGrid').innerHTML=rel.map(GENIE.cardHTML).join('');
-      document.getElementById('related').style.display='';
-    }
-    window.scrollTo({top:0});
+    GENIE.getPosts().then(function(posts){
+      var rel=posts.filter(function(x){return x.slug!==p.slug && x.category===p.category;}).slice(0,3);
+      if(rel.length){
+        document.getElementById('relatedGrid').innerHTML=rel.map(GENIE.cardHTML).join('');
+        document.getElementById('related').style.display='';
+      }
+    });
   }).catch(function(e){document.getElementById('content').innerHTML='<p>記事の読み込みに失敗しました。</p>';});
 })();
 </script>

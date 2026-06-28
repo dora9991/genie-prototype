@@ -3,6 +3,38 @@
    ========================================================= */
 (function(){
   var LINE = "https://lin.ee/SjBHjVV";
+  // 記事・カレンダーの配信API（管理画面と同じWorker）
+  var API = "https://genie-api.kenett999.workers.dev";
+
+  // 記事一覧を取得（APIが落ちていたら静的JSONにフォールバック）
+  async function getPosts(){
+    try{
+      var r = await fetch(API + "/api/posts");
+      if(!r.ok) throw 0;
+      return await r.json();
+    }catch(e){
+      var r2 = await fetch("data/posts.json");
+      return await r2.json();
+    }
+  }
+  // 単一記事を取得
+  async function getPost(slug){
+    try{
+      var r = await fetch(API + "/api/posts/" + encodeURIComponent(slug));
+      if(r.ok) return await r.json();
+    }catch(e){}
+    var r2 = await fetch("data/posts.json");
+    var all = await r2.json();
+    return all.filter(function(x){return x.slug===slug;})[0] || all[0];
+  }
+  // カレンダー（定例＋特別）を取得
+  async function getEvents(){
+    try{
+      var r = await fetch(API + "/api/events");
+      if(r.ok) return await r.json();
+    }catch(e){}
+    return { recurring:[{dow:3,title:"定例交流会 21:00",warm:0},{dow:4,title:"定例交流会 21:00",warm:0}], special:[] };
+  }
 
   // --- HTMLエスケープ ---
   function esc(s){
@@ -48,5 +80,6 @@
   else{ document.addEventListener('DOMContentLoaded', initMenu); }
 
   // --- 公開API ---
-  window.GENIE = { esc:esc, cat:cat, cardHTML:cardHTML, LINE:LINE };
+  window.GENIE = { esc:esc, cat:cat, cardHTML:cardHTML, LINE:LINE, API:API,
+                   getPosts:getPosts, getPost:getPost, getEvents:getEvents };
 })();

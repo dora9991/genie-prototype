@@ -83,7 +83,7 @@
 (function(){
   var ALL=[], cats=['すべて'];
   var initial=new URLSearchParams(location.search).get('cat')||'すべて';
-  fetch('data/posts.json').then(function(r){return r.json();}).then(function(posts){
+  GENIE.getPosts().then(function(posts){
     ALL=posts;
     posts.forEach(function(p){if(p.category && cats.indexOf(p.category)<0)cats.push(p.category);});
     var fb=document.getElementById('filters');
