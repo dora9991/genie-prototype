@@ -120,11 +120,14 @@
   };
   function cat(c){ return CAT[c] || {bg:'#eaf1fa',fg:'#15568f',g1:'#8fc1ec',g2:'#1e73be'}; }
 
+  // アイキャッチの表示位置（管理画面で調整した object-position）
+  function posStyle(p){ var v=p&&(p.thumbPos||p.thumb_pos); return v?' style="object-position:'+esc(v)+'"':''; }
+
   // --- 記事カードのHTML ---
   function cardHTML(p){
     var c = cat(p.category);
     var thumb = p.thumb
-      ? '<div class="thumb"><img src="'+esc(p.thumb)+'" alt="" loading="lazy"></div>'
+      ? '<div class="thumb"><img src="'+esc(p.thumb)+'" alt="" loading="lazy"'+posStyle(p)+'></div>'
       : '<div class="thumb ph" style="background:linear-gradient(135deg,#4ba3e0,#1e73be)">'
         + '<span class="ph-cat">'+esc(p.category||'記事')+'</span>'
         + '<span class="ph-brand">教員コミュニティ ジーニー</span></div>';
@@ -146,6 +149,6 @@
   else{ document.addEventListener('DOMContentLoaded', initMenu); }
 
   // --- 公開API ---
-  window.GENIE = { esc:esc, cat:cat, cardHTML:cardHTML, LINE:LINE, API:API,
+  window.GENIE = { esc:esc, cat:cat, cardHTML:cardHTML, posStyle:posStyle, LINE:LINE, API:API,
                    getPosts:getPosts, getPost:getPost, getEvents:getEvents, getSettings:getSettings };
 })();

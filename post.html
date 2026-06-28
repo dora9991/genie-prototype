@@ -81,7 +81,7 @@
     document.title=p.title+'｜教員コミュニティ ジーニー';
     var c=GENIE.cat(p.category);
     var hero=p.thumb
-      ? '<div class="art-hero"><img src="'+GENIE.esc(p.thumb)+'" alt=""></div>'
+      ? '<div class="art-hero"><img src="'+GENIE.esc(p.thumb)+'" alt=""'+GENIE.posStyle(p)+'></div>'
       : '';
     document.getElementById('content').innerHTML=
       hero+

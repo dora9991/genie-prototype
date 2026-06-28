@@ -281,7 +281,7 @@
   function cleanName(t){ return (t||'').replace(/【[^】]*】/g,'').trim().slice(0,16); }
   function tile(p){
     return '<a class="member" href="post.html?slug='+encodeURIComponent(p.slug)+'">'+
-      '<img class="ava" src="'+GENIE.esc(p.thumb)+'" alt="'+GENIE.esc(cleanName(p.title))+'" loading="lazy">'+
+      '<img class="ava" src="'+GENIE.esc(p.thumb)+'" alt="'+GENIE.esc(cleanName(p.title))+'" loading="lazy"'+GENIE.posStyle(p)+'>'+
       '<div class="nm">'+GENIE.esc(cleanName(p.title))+'</div></a>';
   }
   GENIE.getPosts().then(function(posts){
