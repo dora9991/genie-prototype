@@ -50,7 +50,8 @@
   .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
   .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;transition:transform .15s,box-shadow .15s}
   .card:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(60,50,30,.08)}
-  .card .thumb{height:150px;background:linear-gradient(135deg,#cfe0f3,#f3e6d3)}
+  .card .thumb{height:150px;background:linear-gradient(135deg,#cfe0f3,#f3e6d3);overflow:hidden}
+  .card .thumb img{width:100%;height:100%;object-fit:cover;display:block}
   .card .thumb.c2{background:linear-gradient(135deg,#f6dcc9,#e7eede)}
   .card .thumb.c3{background:linear-gradient(135deg,#dfeede,#cfe0f3)}
   .card .body{padding:16px 18px 20px}
@@ -141,13 +142,9 @@
   <div class="wrap">
     <div class="sec-head">
       <div><div class="sub">BLOG</div><h2>新着記事</h2></div>
-      <a class="more" href="#">すべて見る →</a>
+      <a class="more" href="articles.html">すべて見る →</a>
     </div>
-    <div class="grid">
-      <a class="card" href="#"><div class="thumb"></div><div class="body"><span class="tag">ブログ</span><h3>先生も親も「ちゃんとしなきゃ」に疲れていませんか？</h3><div class="date">2026.06.15</div></div></a>
-      <a class="card" href="#"><div class="thumb c2"></div><div class="body"><span class="tag">学級経営</span><h3>「魔の6月」を乗り越え、子どもが自走するクラスへ</h3><div class="date">2026.06.12</div></div></a>
-      <a class="card" href="#"><div class="thumb c3"></div><div class="body"><span class="tag">コラム</span><h3>変わりたいけど変われないのは、意志が弱いからじゃない</h3><div class="date">2026.06.08</div></div></a>
-    </div>
+    <div class="grid" id="postGrid"></div>
   </div>
 </section>
 
@@ -173,13 +170,9 @@
   <div class="wrap">
     <div class="sec-head">
       <div><div class="sub">REPORT & NEWS</div><h2>イベント報告・ニュース</h2></div>
-      <a class="more" href="#">すべて見る →</a>
+      <a class="more" href="articles.html?cat=イベント報告">すべて見る →</a>
     </div>
-    <div class="grid">
-      <a class="card" href="#"><div class="thumb c2"></div><div class="body"><span class="tag">イベント報告</span><h3>1時間で自分専用のAI先生が完成！？セミナー開催レポート</h3><div class="date">2026.06.10</div></div></a>
-      <a class="card" href="#"><div class="thumb c3"></div><div class="body"><span class="tag">イベント報告</span><h3>運動会を通して学級・学年を育てるレポート</h3><div class="date">2026.06.03</div></div></a>
-      <a class="card" href="#"><div class="thumb"></div><div class="body"><span class="tag">ニュース</span><h3>新しいパートナー団体との連携が決まりました</h3><div class="date">2026.05.28</div></div></a>
-    </div>
+    <div class="grid" id="reportGrid"></div>
   </div>
 </section>
 
@@ -254,6 +247,23 @@
   document.getElementById('calPrev').onclick=function(){cur.setMonth(cur.getMonth()-1);render();};
   document.getElementById('calNext').onclick=function(){cur.setMonth(cur.getMonth()+1);render();};
   render();
+})();
+
+// 実記事（WordPressから移行した157本）を読み込んで表示
+(function(){
+  function esc(s){return (s||'').replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function card(p){
+    var t=p.thumb?'<div class="thumb"><img src="'+p.thumb+'" alt="" loading="lazy"></div>':'<div class="thumb"></div>';
+    return '<a class="card" href="post.html?slug='+encodeURIComponent(p.slug)+'">'+t+
+      '<div class="body"><span class="tag">'+esc(p.category)+'</span><h3>'+esc(p.title)+'</h3>'+
+      '<div class="date">'+(p.date||'').replace(/-/g,'.')+'</div></div></a>';
+  }
+  fetch('data/posts.json').then(function(r){return r.json();}).then(function(posts){
+    var g=document.getElementById('postGrid');
+    if(g) g.innerHTML=posts.slice(0,9).map(card).join('');
+    var rep=document.getElementById('reportGrid');
+    if(rep) rep.innerHTML=posts.filter(function(p){return p.category==='イベント報告'||p.category==='News';}).slice(0,6).map(card).join('');
+  }).catch(function(e){console.error(e);});
 })();
 </script>
 
