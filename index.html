@@ -100,7 +100,6 @@
         <span><i style="background:#e0773c"></i>特別イベント</span>
       </div>
       <div class="cal-grid" id="calGrid"></div>
-      <div class="cal-list" id="calList"></div>
     </div>
   </div>
 </section>
@@ -170,7 +169,7 @@
   function render(){
     var y=cur.getFullYear(), m=cur.getMonth();
     title.textContent = y+'年'+(m+1)+'月';
-    grid.innerHTML=''; list.innerHTML='';
+    grid.innerHTML='';
     dows.forEach(function(w,i){var e=document.createElement('div');e.className='dow'+(i===0?' sun':i===6?' sat':'');e.textContent=w;grid.appendChild(e);});
     var first=new Date(y,m,1).getDay(), days=new Date(y,m+1,0).getDate(), today=new Date();
     for(var i=0;i<first;i++){var ec=document.createElement('div');ec.className='cal-cell empty';grid.appendChild(ec);}
@@ -178,7 +177,7 @@
     for(var d=1;d<=days;d++){
       var cell=document.createElement('div'); cell.className='cal-cell';
       var dow=new Date(y,m,d).getDay(), evs=[];
-      REC.forEach(function(r){ if(Number(r.dow)===dow) evs.push({t:r.title,warm:!!r.warm,link:LINK}); });
+      REC.forEach(function(r){ if(Number(r.dow)===dow) evs.push({t:r.title,warm:!!r.warm,link:'community.html'}); });
       if(SPECIAL[key(y,m,d)]) SPECIAL[key(y,m,d)].forEach(function(s){ evs.push({t:s.title,warm:!!s.warm,link:s.link||LINK}); });
       var html='<span class="num">'+d+'</span>';
       evs.forEach(function(ev){html+='<a class="ev'+(ev.warm?' warm':'')+'" href="'+ev.link+'" target="_blank" rel="noopener" title="'+GENIE.esc(ev.t)+'">'+GENIE.esc(ev.t)+'</a>';month.push({d:d,dow:dow,t:ev.t,link:ev.link});});
@@ -186,11 +185,6 @@
       if(today.getFullYear()===y&&today.getMonth()===m&&today.getDate()===d)cell.classList.add('today');
       cell.innerHTML=html; grid.appendChild(cell);
     }
-    month.slice(0,8).forEach(function(ev){
-      var a=document.createElement('a'); a.href=ev.link; a.target='_blank'; a.rel='noopener';
-      a.innerHTML='<span class="badge">'+(m+1)+'/'+ev.d+'（'+dows[ev.dow]+'）</span> '+GENIE.esc(ev.t);
-      list.appendChild(a);
-    });
   }
   document.getElementById('calPrev').onclick=function(){cur.setMonth(cur.getMonth()-1);render();};
   document.getElementById('calNext').onclick=function(){cur.setMonth(cur.getMonth()+1);render();};
