@@ -9,6 +9,22 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/site.css">
+<style>
+  /* 本家風スライダー（ヒーロー右） */
+  .slider{position:relative;width:100%;aspect-ratio:16/10;border-radius:18px;overflow:hidden;box-shadow:0 14px 36px rgba(60,50,30,.14);background:#e7e1d6}
+  .slider .sl{position:absolute;inset:0;opacity:0;transition:opacity .8s ease}
+  .slider .sl.on{opacity:1}
+  .slider .sl img{width:100%;height:100%;object-fit:cover;display:block}
+  .slider .dots{position:absolute;left:0;right:0;bottom:12px;display:flex;justify-content:center;gap:6px;z-index:2}
+  .slider .dots i{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.55);cursor:pointer;transition:.2s}
+  .slider .dots i.on{background:#fff;width:18px;border-radius:5px}
+  /* 講師・メンバー丸アイコン */
+  .members{display:grid;grid-template-columns:repeat(auto-fill,minmax(108px,1fr));gap:20px 14px}
+  .member{text-align:center}
+  .member .ava{width:86px;height:86px;border-radius:50%;object-fit:cover;margin:0 auto;display:block;border:3px solid #fff;box-shadow:0 5px 16px rgba(60,50,30,.14);background:#eee;transition:transform .15s}
+  .member:hover .ava{transform:translateY(-4px)}
+  .member .nm{font-size:13px;margin-top:9px;font-weight:700;line-height:1.45;color:var(--ink)}
+</style>
 </head>
 <body>
 
@@ -51,34 +67,8 @@
         <div class="it"><span class="n">無料</span><span class="l">LINE登録特典つき</span></div>
       </div>
     </div>
-    <div class="hero-art" id="heroArt" aria-hidden="true">
-      <svg viewBox="0 0 420 380" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="225" cy="180" r="160" fill="#fff" opacity=".55"/>
-        <circle cx="225" cy="180" r="160" fill="none" stroke="#e7e1d6" stroke-width="2" stroke-dasharray="3 8"/>
-        <!-- 大きな吹き出し（ブルー） -->
-        <g>
-          <rect x="48" y="78" width="200" height="118" rx="26" fill="#2f6db3"/>
-          <path d="M96 196 l-6 34 38 -28 Z" fill="#2f6db3"/>
-          <rect x="74" y="108" width="148" height="13" rx="6.5" fill="#ffffff" opacity=".92"/>
-          <rect x="74" y="132" width="120" height="13" rx="6.5" fill="#ffffff" opacity=".7"/>
-          <rect x="74" y="156" width="138" height="13" rx="6.5" fill="#ffffff" opacity=".5"/>
-        </g>
-        <!-- 小さな吹き出し（オレンジ） -->
-        <g>
-          <rect x="196" y="182" width="160" height="100" rx="24" fill="#e0773c"/>
-          <path d="M320 282 l8 30 -36 -22 Z" fill="#e0773c"/>
-          <rect x="220" y="210" width="112" height="12" rx="6" fill="#fff" opacity=".92"/>
-          <rect x="220" y="232" width="86" height="12" rx="6" fill="#fff" opacity=".68"/>
-        </g>
-        <!-- ハート -->
-        <path d="M150 250 c-4 -10 -22 -12 -22 2 c0 12 22 22 22 22 c0 0 22 -10 22 -22 c0 -14 -18 -12 -22 -2 Z" fill="#e0773c" opacity=".85"/>
-        <!-- きらめき -->
-        <g fill="#f0b27a">
-          <path d="M330 96 l4 12 12 4 -12 4 -4 12 -4 -12 -12 -4 12 -4 Z"/>
-          <circle cx="78" cy="250" r="6"/>
-          <circle cx="300" cy="150" r="5" opacity=".7"/>
-        </g>
-      </svg>
+    <div class="hero-art" id="heroArt">
+      <div class="slider" id="slider"><div class="dots"></div></div>
     </div>
   </div>
 </section>
@@ -122,6 +112,16 @@
       <a class="more" href="articles.html?cat=イベント報告">すべて見る →</a>
     </div>
     <div class="grid" id="reportGrid"></div>
+  </div>
+</section>
+
+<section class="block" id="members" style="background:var(--bg-2)">
+  <div class="wrap">
+    <div class="sec-head">
+      <div><span class="eyebrow">MEMBERS</span><h2>講師・メンバー紹介</h2></div>
+      <a class="more" href="articles.html?cat=講師陣">すべて見る →</a>
+    </div>
+    <div class="members" id="memberGrid"></div>
   </div>
 </section>
 
@@ -216,6 +216,36 @@
     var rep=document.getElementById('reportGrid');
     if(rep) rep.innerHTML=posts.filter(function(p){return p.category==='イベント報告'||p.category==='News';}).slice(0,3).map(GENIE.cardHTML).join('');
   }).catch(function(e){console.error(e);});
+})();
+
+// ---- 本家風スライダー（トップのバナー切替）----
+(function(){
+  var s=document.getElementById('slider'); if(!s) return;
+  fetch('data/slides.json').then(function(r){return r.json();}).then(function(sl){
+    if(!sl.length) return;
+    var dots=s.querySelector('.dots');
+    sl.forEach(function(x,i){
+      var d=document.createElement('div'); d.className='sl'+(i===0?' on':'');
+      d.innerHTML='<img src="'+x.img+'" alt="" loading="lazy">'; s.insertBefore(d,dots);
+      var dot=document.createElement('i'); if(i===0)dot.className='on'; dot.setAttribute('data-i',i); dots.appendChild(dot);
+    });
+    var slides=s.querySelectorAll('.sl'), dd=dots.querySelectorAll('i'), cur=0, timer;
+    function go(i){slides[cur].classList.remove('on');dd[cur].classList.remove('on');cur=i;slides[cur].classList.add('on');dd[cur].classList.add('on');}
+    dd.forEach(function(dot){dot.onclick=function(){go(+dot.getAttribute('data-i'));reset();};});
+    function reset(){clearInterval(timer);timer=setInterval(function(){go((cur+1)%slides.length);},4500);}
+    reset();
+  }).catch(function(){});
+})();
+
+// ---- 講師・メンバーの丸アイコン一覧 ----
+(function(){
+  var g=document.getElementById('memberGrid'); if(!g||!window.GENIE) return;
+  GENIE.getPosts().then(function(posts){
+    var m=posts.filter(function(p){return (p.category==='講師陣'||p.category==='メンバー紹介') && p.thumb;}).slice(0,18);
+    g.innerHTML=m.map(function(p){
+      return '<a class="member" href="post.html?slug='+encodeURIComponent(p.slug)+'"><img class="ava" src="'+GENIE.esc(p.thumb)+'" alt="" loading="lazy"><div class="nm">'+GENIE.esc((p.title||'').slice(0,16))+'</div></a>';
+    }).join('');
+  }).catch(function(){});
 })();
 </script>
 
